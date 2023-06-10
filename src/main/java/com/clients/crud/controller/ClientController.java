@@ -2,7 +2,7 @@ package com.clients.crud.controller;
 
 import com.clients.crud.model.Client;
 import com.clients.crud.model.dto.ClienteResponseDTO;
-import com.clients.crud.repository.cliente.ClienteRepository;
+import com.clients.crud.repository.client.ClientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -14,23 +14,23 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/crud")
 @AllArgsConstructor
-public class ClienteController {
+public class ClientController {
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClientRepository clientRepository;
 
     @GetMapping(value = "/listAll")
     public ResponseEntity<?> list(Pageable pageable){
-        return new ResponseEntity<>(clienteRepository.findAll(pageable),HttpStatus.OK);
+        return new ResponseEntity<>(clientRepository.findAll(pageable),HttpStatus.OK);
     }
 
     @PostMapping("/save")
     public void save(@RequestBody Client client){
-        clienteRepository.salvar(client);
+        clientRepository.salvar(client);
     }
     @GetMapping("/getClient/{id}")
     public Optional<ClienteResponseDTO> getClient(@PathVariable("id")  Long id){
-        return clienteRepository.createClienteDTO(id);
+        return clientRepository.createClienteDTO(id);
     }
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable("id") Long id){ clienteRepository.deletar(id);}
+    public void delete(@PathVariable("id") Long id){ clientRepository.deletar(id);}
 }

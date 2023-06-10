@@ -1,4 +1,4 @@
-package com.clients.crud.repository.cliente;
+package com.clients.crud.repository.client;
 
 import com.clients.crud.model.Client;
 import com.clients.crud.model.Email;
@@ -17,20 +17,20 @@ import java.util.Optional;
 
 
 @Component
-public class ClienteRepositoryImpl{
+public class ClientRepositoryImpl {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
     @Lazy
-    private ClienteRepository clienteRepository;
+    private ClientRepository clientRepository;
 
     @Autowired
     @Lazy
     private EmailRepository emailRepository;
 
-    public ClienteRepositoryImpl(EntityManager entityManager) {
+    public ClientRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
@@ -38,7 +38,7 @@ public class ClienteRepositoryImpl{
         String urlImage= "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/768px-User_icon_2.svg.png";
 
         ClienteResponseDTO responseDTO = new ClienteResponseDTO();
-        responseDTO.setCliente(clienteRepository.findById(id));
+        responseDTO.setClient(clientRepository.findById(id));
         responseDTO.setUrlImage(urlImage);
 
         return Optional.of(responseDTO);
@@ -49,7 +49,7 @@ public class ClienteRepositoryImpl{
 
         entity.setEmail(null);
 
-        entity = clienteRepository.save(entity);
+        entity = clientRepository.save(entity);
 
 
         if (entity.getId() != 0) {
@@ -68,10 +68,10 @@ public class ClienteRepositoryImpl{
 
     public void deletar(Long id) {
         Client entity = new Client();
-        entity = clienteRepository.getById(id);
+        entity = clientRepository.getById(id);
 
         removeOldEmails(entity, entity.getEmail());
-        clienteRepository.deleteById(entity.getId());
+        clientRepository.deleteById(entity.getId());
     }
 
 
